@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-ink font-sans antialiased;
+  }
+
+  * {
+    @apply box-border;
+  }
+}
+
+@layer components {
+  /* Button variants */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-brand-600 text-white
+           px-6 py-3 rounded-xl text-[15px] font-medium
+           transition-all duration-200 cursor-pointer border-0
+           hover:bg-brand-700 hover:-translate-y-0.5 hover:shadow-brand-lg;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 bg-white text-ink-2
+           border border-brand-600/20 px-6 py-3 rounded-xl text-[15px] font-medium
+           transition-all duration-200 cursor-pointer
+           hover:border-brand-600 hover:text-brand-600 hover:-translate-y-px;
+  }
+
+  .btn-ghost-white {
+    @apply inline-flex items-center gap-2
+           bg-white/10 text-white border border-white/25
+           px-6 py-3 rounded-xl text-[15px] font-medium
+           transition-all duration-200 cursor-pointer
+           hover:bg-white/20;
+  }
+
+  .btn-solid-white {
+    @apply inline-flex items-center gap-2
+           bg-white text-brand-600 border-0
+           px-6 py-3 rounded-xl text-[15px] font-medium
+           transition-all duration-200 cursor-pointer
+           hover:-translate-y-0.5 hover:shadow-xl;
+  }
+
+  /* Section layout */
+  .section-wrapper {
+    @apply max-w-[700px] mx-auto px-6 py-20;
+  }
+
+  .section-tag {
+    @apply text-xs font-medium text-brand-600 tracking-widest uppercase mb-3;
+  }
+
+  .section-title {
+    @apply font-display font-extrabold text-[32px] leading-tight
+           text-ink tracking-tight mb-3;
+  }
+
+  .section-subtitle {
+    @apply text-base text-ink-3 leading-relaxed mb-10;
+  }
+
+  /* Cards */
+  .card-base {
+    @apply bg-white border border-brand-600/10 rounded-xl
+           transition-all duration-200
+           hover:border-brand-600/20 hover:-translate-y-0.5;
+  }
+
+  .card-featured {
+    @apply border-brand-600 shadow-brand-sm
+           bg-gradient-to-b from-white to-[#FAF8FF];
+  }
+
+  /* Badges */
+  .badge-brand {
+    @apply inline-flex items-center gap-1.5
+           bg-brand-100 text-brand-600
+           border border-brand-600/20
+           px-3.5 py-1.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-pill {
+    @apply inline-block bg-surface-3 text-brand-600
+           text-[11px] font-medium px-2.5 py-0.5 rounded-full;
+  }
+
+  /* Integration chips */
+  .int-chip {
+    @apply flex items-center gap-2.5 w-full
+           bg-white/[0.04] border border-brand-600/20
+           rounded-xl p-3 transition-all duration-200 cursor-default;
+  }
+
+  .int-chip:hover {
+    @apply bg-brand-600/10 border-brand-600/40;
+  }
+
+  /* Plan feature list items */
+  .feature-check {
+    @apply flex items-start gap-1.5 text-[12px] text-ink-2 leading-snug;
+  }
+
+  .feature-check::before {
+    content: '✓';
+    @apply text-emerald-500 font-bold flex-shrink-0 mt-px text-[11px];
+  }
+
+  .feature-cross {
+    @apply flex items-start gap-1.5 text-[12px] text-ink-3 leading-snug;
+  }
+
+  .feature-cross::before {
+    content: '✕';
+    @apply text-red-400 font-semibold flex-shrink-0 mt-px text-[11px] opacity-70;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Syne', sans-serif;
+  }
+
+  .text-gradient-brand {
+    @apply bg-clip-text text-transparent
+           bg-gradient-to-r from-brand-600 to-brand-400;
+  }
+
+  .glow-brand {
+    box-shadow: 0 0 0 8px rgba(124,58,237,0.12),
+                0 0 0 18px rgba(124,58,237,0.06),
+                0 0 40px rgba(124,58,237,0.4);
+  }
+
+  .animate-glow {
+    animation: coreGlow 3s ease-in-out infinite;
+  }
+}
+
+/* Keyframes */
+@keyframes coreGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 8px rgba(124,58,237,0.12),
+                0 0 0 18px rgba(124,58,237,0.06),
+                0 0 40px rgba(124,58,237,0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(124,58,237,0.18),
+                0 0 0 22px rgba(124,58,237,0.08),
+                0 0 60px rgba(124,58,237,0.55);
+  }
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
