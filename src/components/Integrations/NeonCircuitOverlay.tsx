@@ -1,13 +1,25 @@
-/** Trazado tipo circuito desde el hub central hacia cada tarjeta lateral */
-function circuitPath(
+/** Smooth Bezier circuit paths from the hub central toward each side card */
+function bezierCircuitPath(
   cx: number,
   cy: number,
   tx: number,
   ty: number,
   side: 'left' | 'right'
 ): string {
-  const elbowX = side === 'left' ? cx - 42 : cx + 42
-  return `M ${cx} ${cy} L ${elbowX} ${cy} L ${elbowX} ${ty} L ${tx} ${ty}`
+  const dx = tx - cx
+  const cpOffset = Math.abs(dx) * 0.45
+
+  if (side === 'left') {
+    return [
+      `M ${cx} ${cy}`,
+      `C ${cx - cpOffset} ${cy}, ${tx + cpOffset} ${ty}, ${tx} ${ty}`,
+    ].join(' ')
+  }
+
+  return [
+    `M ${cx} ${cy}`,
+    `C ${cx + cpOffset} ${cy}, ${tx - cpOffset} ${ty}, ${tx} ${ty}`,
+  ].join(' ')
 }
 
 interface NeonCircuitOverlayProps {
@@ -22,27 +34,27 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
   const rightX = 672
 
   const distributeY = (count: number, index: number) => {
-    const top = 52
-    const bottom = 348
+    const top = 56
+    const bottom = 344
     if (count <= 1) return cy
     return top + ((bottom - top) / (count - 1)) * index
   }
 
   return (
     <svg
-      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
       viewBox="0 0 700 400"
       preserveAspectRatio="none"
       aria-hidden="true"
     >
       <defs>
         <linearGradient id="integrations-neon-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#6366f1" stopOpacity="0.95" />
-          <stop offset="50%" stopColor="#a855f7" stopOpacity="1" />
-          <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.95" />
+          <stop offset="0%" stopColor="#D946EF" stopOpacity="0.9" />
+          <stop offset="50%" stopColor="#8B5CF6" stopOpacity="1" />
+          <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.9" />
         </linearGradient>
-        <filter id="integrations-neon-glow" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="2.5" result="blur" />
+        <filter id="integrations-neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
@@ -55,16 +67,15 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
         return (
           <g key={`left-${i}`}>
             <path
-              d={circuitPath(cx, cy, leftX, ty, 'left')}
+              d={bezierCircuitPath(cx, cy, leftX, ty, 'left')}
               fill="none"
               stroke="url(#integrations-neon-grad)"
-              strokeWidth="1.5"
+              strokeWidth="2"
               strokeLinecap="round"
-              strokeLinejoin="round"
               filter="url(#integrations-neon-glow)"
-              opacity="0.85"
+              opacity="0.7"
             />
-            <circle cx={leftX} cy={ty} r="2.5" fill="#a855f7" opacity="0.9" />
+            <circle cx={leftX} cy={ty} r="3" fill="#D946EF" opacity="0.85" />
           </g>
         )
       })}
@@ -74,16 +85,15 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
         return (
           <g key={`right-${i}`}>
             <path
-              d={circuitPath(cx, cy, rightX, ty, 'right')}
+              d={bezierCircuitPath(cx, cy, rightX, ty, 'right')}
               fill="none"
               stroke="url(#integrations-neon-grad)"
-              strokeWidth="1.5"
+              strokeWidth="2"
               strokeLinecap="round"
-              strokeLinejoin="round"
               filter="url(#integrations-neon-glow)"
-              opacity="0.85"
+              opacity="0.7"
             />
-            <circle cx={rightX} cy={ty} r="2.5" fill="#38bdf8" opacity="0.9" />
+            <circle cx={rightX} cy={ty} r="3" fill="#3B82F6" opacity="0.85" />
           </g>
         )
       })}

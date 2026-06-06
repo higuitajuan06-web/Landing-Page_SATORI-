@@ -75,8 +75,8 @@ export function Integrations() {
         </p>
 
         {/* Móvil y tablet: apilamiento vertical */}
-        <div className="flex flex-col gap-3 w-full max-w-full overflow-hidden lg:hidden">
-          <div className="flex flex-col gap-2 w-full max-w-full overflow-hidden">
+        <div className="flex flex-col gap-4 w-full max-w-full overflow-hidden lg:hidden">
+          <div className="flex flex-col gap-3 w-full max-w-full overflow-hidden">
             <p className="text-[9px] sm:text-[10px] font-semibold text-white/30 tracking-widest uppercase mb-1 text-center">
               Entradas
             </p>
@@ -87,7 +87,7 @@ export function Integrations() {
 
           <HubConnector variant="mobile" />
 
-          <div className="flex flex-col gap-2 w-full max-w-full overflow-hidden">
+          <div className="flex flex-col gap-3 w-full max-w-full overflow-hidden">
             <p className="text-[9px] sm:text-[10px] font-semibold text-white/30 tracking-widest uppercase mb-1 text-center">
               Salidas automáticas
             </p>
@@ -98,13 +98,13 @@ export function Integrations() {
         </div>
 
         {/* Laptop y TV: layout horizontal + circuitos neón */}
-        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-0 lg:items-stretch w-full max-w-full overflow-hidden relative min-h-[360px]">
+        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-4 lg:items-stretch w-full max-w-full overflow-hidden relative min-h-[400px] py-4">
           <NeonCircuitOverlay
             leftCount={INTEGRATIONS_LEFT.length}
             rightCount={INTEGRATIONS_RIGHT.length}
           />
 
-          <div className="flex flex-col gap-2.5 overflow-hidden min-w-0 relative z-10">
+          <div className="flex flex-col gap-4 overflow-hidden min-w-0 relative z-10 py-2">
             <p className="text-[10px] font-semibold text-white/30 tracking-widest uppercase mb-1 text-right">
               Entradas
             </p>
@@ -115,7 +115,7 @@ export function Integrations() {
 
           <HubConnector variant="desktop" />
 
-          <div className="flex flex-col gap-2.5 overflow-hidden min-w-0 relative z-10">
+          <div className="flex flex-col gap-4 overflow-hidden min-w-0 relative z-10 py-2">
             <p className="text-[10px] font-semibold text-white/30 tracking-widest uppercase mb-1 text-left">
               Salidas automáticas
             </p>
