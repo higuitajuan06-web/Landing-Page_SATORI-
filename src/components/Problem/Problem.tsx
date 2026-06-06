@@ -1,56 +1,12 @@
+import { Clock, Users, RefreshCw, Activity, Zap } from 'lucide-react'
 import { PAIN_POINTS } from '@/constants'
 
-type HintType = 'delay' | 'notification' | 'warning' | 'clock'
-
-const PAIN_HINTS: HintType[] = ['delay', 'notification', 'warning', 'clock']
-
-function PainHint({ type }: { type: HintType }) {
-  const base =
-    'w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border transition-transform duration-300 ease-out group-hover:scale-105'
-
-  if (type === 'notification') {
-    return (
-      <span className={`${base} bg-amber-500/10 border-amber-500/20 text-amber-400`} aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 01-3.46 0" />
-        </svg>
-      </span>
-    )
-  }
-
-  if (type === 'warning') {
-    return (
-      <span className={`${base} bg-red-500/10 border-red-500/20 text-red-400`} aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-          <line x1="12" y1="9" x2="12" y2="13" />
-          <line x1="12" y1="17" x2="12.01" y2="17" />
-        </svg>
-      </span>
-    )
-  }
-
-  if (type === 'clock') {
-    return (
-      <span className={`${base} bg-orange-500/10 border-orange-500/20 text-orange-400`} aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
-        </svg>
-      </span>
-    )
-  }
-
-  return (
-    <span className={`${base} bg-indigo-500/10 border-indigo-500/20 text-indigo-400`} aria-hidden="true">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="12" cy="12" r="10" />
-        <polyline points="12 6 12 12 8 14" />
-      </svg>
-    </span>
-  )
-}
+const PAIN_ICONS = [
+  { Icon: Clock, color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
+  { Icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+  { Icon: Activity, color: 'text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' },
+  { Icon: RefreshCw, color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
+]
 
 export function Problem() {
   return (
@@ -75,13 +31,18 @@ export function Problem() {
               className="group relative bg-slate-900/60 border border-white/10 rounded-xl p-5 md:p-6 flex items-start gap-3.5 md:gap-4
                          transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-[1.01] hover:border-indigo-500/25 hover:shadow-lg hover:shadow-indigo-500/10"
             >
-              <span className="text-[22px] shrink-0 mt-0.5 transition-transform duration-300 ease-out group-hover:scale-110">
-                {point.emoji}
-              </span>
+              {(() => {
+                const iconConfig = PAIN_ICONS[i]
+                const Icon = iconConfig?.Icon ?? Clock
+                return (
+                  <span className={`shrink-0 mt-0.5 w-9 h-9 rounded-xl flex items-center justify-center border transition-all duration-300 ease-out group-hover:scale-110 ${iconConfig?.bg ?? 'bg-purple-500/10'} ${iconConfig?.border ?? 'border-purple-500/20'}`} aria-hidden="true">
+                    <Icon className={`h-5 w-5 ${iconConfig?.color ?? 'text-purple-400'}`} strokeWidth={2} />
+                  </span>
+                )
+              })()}
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-3 mb-1.5">
                   <h3 className="font-medium text-sm md:text-base text-white">{point.title}</h3>
-                  <PainHint type={PAIN_HINTS[i] ?? 'warning'} />
                 </div>
                 <p className="text-[13px] text-slate-400 leading-relaxed">{point.description}</p>
               </div>
@@ -93,8 +54,8 @@ export function Problem() {
           className="group/banner rounded-2xl p-6 md:p-7 flex items-center gap-4 md:gap-5 transition-all duration-300 ease-out hover:shadow-xl hover:shadow-purple-500/20 hover:-translate-y-0.5"
           style={{ background: 'linear-gradient(135deg, #7C3AED, #A855F7)' }}
         >
-          <span className="text-[36px] shrink-0 transition-transform duration-300 ease-out group-hover/banner:scale-105">
-            ⚡
+          <span className="shrink-0 w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center transition-transform duration-300 ease-out group-hover/banner:scale-105" aria-hidden="true">
+            <Zap className="h-6 w-6 text-yellow-300" strokeWidth={2.5} />
           </span>
           <div>
             <h3 className="font-display font-bold text-xl text-white mb-1.5">
