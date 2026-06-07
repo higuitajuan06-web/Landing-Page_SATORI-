@@ -8,6 +8,9 @@ function Chip({ chip, side }: { chip: IntegrationChip; side: 'left' | 'right' })
     <div
       className={`int-chip max-w-full relative z-10 ${side === 'left' ? 'hover:-translate-x-0.5' : 'hover:translate-x-0.5'}`}
     >
+      {side === 'right' && (
+        <span className="absolute -left-[7px] top-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-blue-500/70 border border-blue-400/30 z-20" aria-hidden="true" />
+      )}
       <div
         className="w-[34px] h-[34px] rounded-lg flex items-center justify-center flex-shrink-0"
         style={{ background: chip.bgColor }}
@@ -18,7 +21,9 @@ function Chip({ chip, side }: { chip: IntegrationChip; side: 'left' | 'right' })
         <span className="block text-[12px] font-medium text-white leading-snug">{chip.label}</span>
         <span className="block text-[11px] text-white/40">{chip.sub}</span>
       </div>
-      <div className="w-1.5 h-1.5 rounded-full bg-brand-600/50 flex-shrink-0 transition-all group-hover:bg-brand-400" />
+      {side === 'left' && (
+        <span className="absolute -right-[7px] top-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-fuchsia-500/70 border border-fuchsia-400/30 z-20" aria-hidden="true" />
+      )}
     </div>
   )
 }

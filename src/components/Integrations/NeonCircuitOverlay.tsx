@@ -1,24 +1,18 @@
-/** Smooth Bezier circuit paths from the hub central toward each side card */
-function bezierCircuitPath(
-  cx: number,
-  cy: number,
-  tx: number,
-  ty: number,
-  side: 'left' | 'right'
-): string {
-  const dx = tx - cx
-  const cpOffset = Math.abs(dx) * 0.45
+/** Smooth Bezier circuit paths connecting chip-card connector dots to the hub edges */
 
-  if (side === 'left') {
-    return [
-      `M ${cx} ${cy}`,
-      `C ${cx - cpOffset} ${cy}, ${tx + cpOffset} ${ty}, ${tx} ${ty}`,
-    ].join(' ')
-  }
+function bezierPath(
+  fromX: number,
+  fromY: number,
+  toX: number,
+  toY: number
+): string {
+  const dx = toX - fromX
+  const sign = dx > 0 ? 1 : -1
+  const cpOffset = Math.abs(dx) * 0.38
 
   return [
-    `M ${cx} ${cy}`,
-    `C ${cx + cpOffset} ${cy}, ${tx - cpOffset} ${ty}, ${tx} ${ty}`,
+    `M ${fromX} ${fromY}`,
+    `C ${fromX + sign * cpOffset} ${fromY}, ${toX - sign * cpOffset} ${toY}, ${toX} ${toY}`,
   ].join(' ')
 }
 
@@ -28,32 +22,44 @@ interface NeonCircuitOverlayProps {
 }
 
 export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlayProps) {
-  const cx = 350
-  const cy = 200
-  const leftX = 28
-  const rightX = 672
+  const viewW = 700
+  const viewH = 400
+
+  // Grid: [leftCol ~320px] [hub ~60px] [rightCol ~320px]
+  const hubW = 60
+  const leftColW = (viewW - hubW) / 2
+  const hubLeftX = leftColW
+  const hubRightX = leftColW + hubW
+  const hubCenterY = viewH / 2
+
+  // Connector dots sit at the inner edge of each card column
+  const leftDotX = leftColW
+  const rightDotX = hubRightX
 
   const distributeY = (count: number, index: number) => {
-    const top = 56
-    const bottom = 344
-    if (count <= 1) return cy
+    const top = 48
+    const bottom = viewH - 48
+    if (count <= 1) return viewH / 2
     return top + ((bottom - top) / (count - 1)) * index
   }
 
   return (
     <svg
-      className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
-      viewBox="0 0 700 400"
+      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      viewBox={`0 0 ${viewW} ${viewH}`}
       preserveAspectRatio="none"
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id="integrations-neon-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#D946EF" stopOpacity="0.9" />
-          <stop offset="50%" stopColor="#8B5CF6" stopOpacity="1" />
-          <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.9" />
+        <linearGradient id="int-grad-l" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="0%" stopColor="#8B5CF6" stopOpacity="1" />
+          <stop offset="100%" stopColor="#D946EF" stopOpacity="0.85" />
         </linearGradient>
-        <filter id="integrations-neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <linearGradient id="int-grad-r" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#8B5CF6" stopOpacity="1" />
+          <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.85" />
+        </linearGradient>
+        <filter id="int-glow" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="3" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
@@ -65,17 +71,16 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
       {Array.from({ length: leftCount }, (_, i) => {
         const ty = distributeY(leftCount, i)
         return (
-          <g key={`left-${i}`}>
+          <g key={`l-${i}`}>
             <path
-              d={bezierCircuitPath(cx, cy, leftX, ty, 'left')}
+              d={bezierPath(leftDotX, ty, hubLeftX, hubCenterY)}
               fill="none"
-              stroke="url(#integrations-neon-grad)"
+              stroke="url(#int-grad-l)"
               strokeWidth="2"
               strokeLinecap="round"
-              filter="url(#integrations-neon-glow)"
-              opacity="0.7"
+              filter="url(#int-glow)"
+              opacity="0.65"
             />
-            <circle cx={leftX} cy={ty} r="3" fill="#D946EF" opacity="0.85" />
           </g>
         )
       })}
@@ -83,17 +88,16 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
       {Array.from({ length: rightCount }, (_, i) => {
         const ty = distributeY(rightCount, i)
         return (
-          <g key={`right-${i}`}>
+          <g key={`r-${i}`}>
             <path
-              d={bezierCircuitPath(cx, cy, rightX, ty, 'right')}
+              d={bezierPath(rightDotX, ty, hubRightX, hubCenterY)}
               fill="none"
-              stroke="url(#integrations-neon-grad)"
+              stroke="url(#int-grad-r)"
               strokeWidth="2"
               strokeLinecap="round"
-              filter="url(#integrations-neon-glow)"
-              opacity="0.7"
+              filter="url(#int-glow)"
+              opacity="0.65"
             />
-            <circle cx={rightX} cy={ty} r="3" fill="#3B82F6" opacity="0.85" />
           </g>
         )
       })}
