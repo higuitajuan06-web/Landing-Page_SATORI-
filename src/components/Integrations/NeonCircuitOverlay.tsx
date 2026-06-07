@@ -1,4 +1,4 @@
-/** Smooth Bezier circuit paths from chip connector dots to the hub edges */
+/** Smooth Bezier circuit paths from chip-card edges to the hub circle */
 
 function bezierPath(
   fromX: number,
@@ -8,7 +8,7 @@ function bezierPath(
 ): string {
   const dx = toX - fromX
   const sign = dx > 0 ? 1 : -1
-  const cpOffset = Math.abs(dx) * 0.4
+  const cpOffset = Math.abs(dx) * 0.38
 
   return [
     `M ${fromX} ${fromY}`,
@@ -25,21 +25,26 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
   const viewW = 700
   const viewH = 400
 
-  // Grid: [leftCol 304px] [gap 16px] [hub 60px] [gap 16px] [rightCol 304px]
-  // Proportions match the Tailwind layout: 1fr | auto(60px) | 1fr, gap-4
-  const hubW = 60
+  // Grid layout: [leftCol] [gap] [hubCol] [gap] [rightCol]
+  // gap-4 = 16px, hub column = 60px
   const gap = 16
-  const colW = (viewW - hubW - gap * 2) / 2
+  const hubColW = 60
+  const colW = (viewW - hubColW - gap * 2) / 2
 
-  const leftColEnd = colW            // right edge of left column = 304
-  const hubStart = colW + gap        // left edge of hub = 320
-  const hubEnd = hubStart + hubW     // right edge of hub = 380
-  const rightColStart = hubEnd + gap // left edge of right column = 396
-  const hubCenterY = viewH / 2
+  const leftColRight = colW                 // 304 - right edge of left column
+  const rightColLeft = colW + gap + hubColW + gap // 396 - left edge of right column
+
+  // Hub circle: 64px diameter centered within the 60px column
+  // Center = leftColRight + gap + hubColW/2 = 304 + 16 + 30 = 350
+  const hubCX = 350
+  const hubCY = viewH / 2
+  const hubRadius = 32
+  const hubLeftEdge = hubCX - hubRadius     // 318
+  const hubRightEdge = hubCX + hubRadius    // 382
 
   const distributeY = (count: number, index: number) => {
-    const top = 52
-    const bottom = viewH - 52
+    const top = 56
+    const bottom = viewH - 56
     if (count <= 1) return viewH / 2
     return top + ((bottom - top) / (count - 1)) * index
   }
@@ -73,9 +78,8 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
         const ty = distributeY(leftCount, i)
         return (
           <g key={`l-${i}`}>
-            <circle cx={leftColEnd} cy={ty} r="3" fill="#D946EF" opacity="0.8" />
             <path
-              d={bezierPath(leftColEnd, ty, hubStart, hubCenterY)}
+              d={bezierPath(leftColRight, ty, hubLeftEdge, hubCY)}
               fill="none"
               stroke="url(#int-grad-l)"
               strokeWidth="2"
@@ -83,6 +87,7 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
               filter="url(#int-glow)"
               opacity="0.65"
             />
+            <circle cx={leftColRight} cy={ty} r="3" fill="#D946EF" opacity="0.8" />
           </g>
         )
       })}
@@ -91,9 +96,8 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
         const ty = distributeY(rightCount, i)
         return (
           <g key={`r-${i}`}>
-            <circle cx={rightColStart} cy={ty} r="3" fill="#3B82F6" opacity="0.8" />
             <path
-              d={bezierPath(rightColStart, ty, hubEnd, hubCenterY)}
+              d={bezierPath(rightColLeft, ty, hubRightEdge, hubCY)}
               fill="none"
               stroke="url(#int-grad-r)"
               strokeWidth="2"
@@ -101,6 +105,7 @@ export function NeonCircuitOverlay({ leftCount, rightCount }: NeonCircuitOverlay
               filter="url(#int-glow)"
               opacity="0.65"
             />
+            <circle cx={rightColLeft} cy={ty} r="3" fill="#3B82F6" opacity="0.8" />
           </g>
         )
       })}
