@@ -9,7 +9,7 @@ function Chip({ chip, side }: { chip: IntegrationChip; side: 'left' | 'right' })
       className={`int-chip max-w-full relative z-10 ${side === 'left' ? 'hover:-translate-x-0.5' : 'hover:translate-x-0.5'}`}
     >
       {side === 'right' && (
-        <span className="absolute -left-[7px] top-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-blue-500/70 border border-blue-400/30 z-20" aria-hidden="true" />
+        <span className="absolute -left-[5px] top-1/2 -translate-y-1/2 w-[5px] h-[5px] rounded-full bg-blue-500/80 z-20" aria-hidden="true" />
       )}
       <div
         className="w-[34px] h-[34px] rounded-lg flex items-center justify-center flex-shrink-0"
@@ -22,7 +22,7 @@ function Chip({ chip, side }: { chip: IntegrationChip; side: 'left' | 'right' })
         <span className="block text-[11px] text-white/40">{chip.sub}</span>
       </div>
       {side === 'left' && (
-        <span className="absolute -right-[7px] top-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-fuchsia-500/70 border border-fuchsia-400/30 z-20" aria-hidden="true" />
+        <span className="absolute -right-[5px] top-1/2 -translate-y-1/2 w-[5px] h-[5px] rounded-full bg-fuchsia-500/80 z-20" aria-hidden="true" />
       )}
     </div>
   )
@@ -109,7 +109,7 @@ export function Integrations() {
             rightCount={INTEGRATIONS_RIGHT.length}
           />
 
-          <div className="flex flex-col gap-4 overflow-hidden min-w-0 relative z-10 py-2">
+          <div className="flex flex-col gap-4 min-w-0 relative z-10 py-2">
             <p className="text-[10px] font-semibold text-white/30 tracking-widest uppercase mb-1 text-right">
               Entradas
             </p>
@@ -120,7 +120,7 @@ export function Integrations() {
 
           <HubConnector variant="desktop" />
 
-          <div className="flex flex-col gap-4 overflow-hidden min-w-0 relative z-10 py-2">
+          <div className="flex flex-col gap-4 min-w-0 relative z-10 py-2">
             <p className="text-[10px] font-semibold text-white/30 tracking-widest uppercase mb-1 text-left">
               Salidas automáticas
             </p>
