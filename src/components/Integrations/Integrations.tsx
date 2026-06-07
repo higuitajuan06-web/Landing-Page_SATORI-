@@ -22,7 +22,7 @@ function Chip({ chip, side }: { chip: IntegrationChip; side: 'left' | 'right' })
   )
 }
 
-/** Nodo conector central S */
+/** Nodo conector central S — flotación + puntos en órbita */
 function HubConnector({ variant }: { variant: 'mobile' | 'desktop' }) {
   const isMobile = variant === 'mobile'
 
@@ -38,11 +38,19 @@ function HubConnector({ variant }: { variant: 'mobile' | 'desktop' }) {
         className={`w-px ${isMobile ? 'h-8' : 'flex-1 min-h-[40px]'}`}
         style={{ background: 'linear-gradient(to bottom, transparent, rgba(124,58,237,0.5))' }}
       />
-      <div
-        className="size-[52px] lg:size-[64px] xl:size-[72px] rounded-full flex items-center justify-center my-2 lg:my-3 animate-glow flex-shrink-0 aspect-square"
-        style={{ background: 'linear-gradient(135deg, #3B0764, #6D28D9, #A855F7)' }}
-      >
-        <span className="font-display font-extrabold text-[18px] lg:text-[22px] xl:text-[26px] text-purple-100">S</span>
+      <div className="relative my-2 lg:my-3 animate-hub-float">
+        <div
+          className="size-[52px] lg:size-[64px] xl:size-[72px] rounded-full flex items-center justify-center animate-glow flex-shrink-0 aspect-square"
+          style={{ background: 'linear-gradient(135deg, #3B0764, #6D28D9, #A855F7)' }}
+        >
+          <span className="font-display font-extrabold text-[18px] lg:text-[22px] xl:text-[26px] text-purple-100">S</span>
+        </div>
+        {/* Orbiting luminous dots */}
+        <span className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+          <span className="absolute w-[5px] h-[5px] rounded-full bg-purple-300/90 animate-hub-orbit-1" style={{ boxShadow: '0 0 6px rgba(168,85,247,0.8)' }} />
+          <span className="absolute w-[4px] h-[4px] rounded-full bg-blue-400/80 animate-hub-orbit-2" style={{ boxShadow: '0 0 5px rgba(96,165,250,0.7)' }} />
+          <span className="absolute w-[3px] h-[3px] rounded-full bg-fuchsia-300/70 animate-hub-orbit-3" style={{ boxShadow: '0 0 4px rgba(217,70,239,0.6)' }} />
+        </span>
       </div>
       <div
         className={`w-px ${isMobile ? 'h-8' : 'flex-1 min-h-[40px]'}`}

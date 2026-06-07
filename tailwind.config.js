@@ -47,6 +47,10 @@ export default {
         'mascot-zero-g': 'mascotZeroG 7s ease-in-out infinite',
         'mascot-energy': 'mascotEnergy 5s ease-in-out infinite',
         'mascot-sparkle': 'mascotSparkle 3s ease-in-out infinite',
+        'hub-float': 'hubFloat 4s ease-in-out infinite',
+        'hub-orbit-1': 'hubOrbit1 6s linear infinite',
+        'hub-orbit-2': 'hubOrbit2 8s linear infinite',
+        'hub-orbit-3': 'hubOrbit3 10s linear infinite',
       },
 
       keyframes: {
@@ -109,6 +113,26 @@ export default {
             opacity: '1',
             transform: 'scale(1.2)',
           },
+        },
+
+        hubFloat: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
+
+        hubOrbit1: {
+          '0%': { transform: 'rotate(0deg) translateX(40px) rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg) translateX(40px) rotate(-360deg)' },
+        },
+
+        hubOrbit2: {
+          '0%': { transform: 'rotate(120deg) translateX(44px) rotate(-120deg)' },
+          '100%': { transform: 'rotate(480deg) translateX(44px) rotate(-480deg)' },
+        },
+
+        hubOrbit3: {
+          '0%': { transform: 'rotate(240deg) translateX(48px) rotate(-240deg)' },
+          '100%': { transform: 'rotate(600deg) translateX(48px) rotate(-600deg)' },
         },
       },
 
