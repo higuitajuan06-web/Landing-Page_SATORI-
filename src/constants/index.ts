@@ -19,8 +19,7 @@ export const NAV_LINKS: NavLink[] = [
 ]
 
 // ─── WhatsApp CTA ──────────────────────────────────────────────────────────
-// Replace with real number: https://wa.me/573XXXXXXXXX
-export const WHATSAPP_URL = 'https://wa.me/573000000000?text=Hola%20SATORI%2C%20quiero%20más%20información'
+export const WHATSAPP_URL = 'https://wa.me/573245246651?text=Hola%20SATORI,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20automatizaci%C3%B3n%20con%20IA.'
 export const DEMO_CALENDAR_URL = '#' // Replace with Calendly or Cal.com link
 
 // ─── Metrics ───────────────────────────────────────────────────────────────

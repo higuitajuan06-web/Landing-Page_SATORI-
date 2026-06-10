@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { DEMO_CALENDAR_URL, WHATSAPP_URL } from '@/constants'
 import { HeroConnectionHub } from './HeroConnectionHub'
 
@@ -27,6 +28,23 @@ const heroSecondaryCta =
   'active:scale-95 hover:shadow-xl hover:shadow-green-500/10 hover:-translate-y-0.5 transition-all duration-300 ease-out'
 
 export function Hero() {
+  const [typewriterText, setTypewriterText] = useState('')
+  const fullText = 'Nosotros lo resolvemos.'
+
+  useEffect(() => {
+    let index = 0
+    const timer = setInterval(() => {
+      if (index < fullText.length) {
+        setTypewriterText(fullText.slice(0, index + 1))
+        index++
+      } else {
+        clearInterval(timer)
+      }
+    }, 100)
+
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <section className="relative bg-slate-950 overflow-hidden">
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -58,10 +76,10 @@ export function Hero() {
                 mientras duermes.
               </span>
               <br />
-              Nosotros lo{' '}
               <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                resolvemos.
+                {typewriterText}
               </span>
+              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent animate-blink-caret border-r-2 border-indigo-400 ml-1" />
             </h1>
 
             <p className="text-base md:text-lg text-slate-400 leading-relaxed mb-8 md:mb-10 max-w-xl lg:max-w-2xl mx-auto lg:mx-0">
