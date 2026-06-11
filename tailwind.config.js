@@ -53,6 +53,8 @@ export default {
         'hub-orbit-3': 'hubOrbit3 10s linear infinite',
         'typewriter': 'typewriter 3.5s steps(11, end) forwards',
         'blink-caret': 'blink-caret 0.75s step-end infinite',
+        'orbit-rotate': 'orbitRotate 30s linear infinite',
+        'counter-rotate': 'counterRotate 30s linear infinite',
       },
 
       keyframes: {
@@ -145,6 +147,16 @@ export default {
         'blink-caret': {
           'from, to': { borderColor: 'transparent' },
           '50%': { borderColor: 'rgba(124, 58, 237, 0.8)' },
+        },
+
+        orbitRotate: {
+          'from': { transform: 'rotate(0deg)' },
+          'to': { transform: 'rotate(360deg)' },
+        },
+
+        counterRotate: {
+          'from': { transform: 'rotate(0deg)' },
+          'to': { transform: 'rotate(-360deg)' },
         },
       },
 

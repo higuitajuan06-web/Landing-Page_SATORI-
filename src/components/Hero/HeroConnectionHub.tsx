@@ -122,60 +122,88 @@ export function HeroConnectionHub() {
         }
       `}</style>
 
-      {/* Circuitos SVG */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        viewBox="0 0 400 400"
-        preserveAspectRatio="xMidYMid meet"
-        aria-hidden="true"
-      >
-        <defs>
-          <linearGradient id="hub-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#a855f7" stopOpacity="0.9" />
-          </linearGradient>
-          <filter id="hub-line-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
+      {/* Contenedor de órbita - gira con nodos y líneas */}
+      <div className="absolute inset-0 w-full h-full animate-orbit-rotate">
+        {/* Circuitos SVG */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox="0 0 400 400"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="hub-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#6366f1" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#a855f7" stopOpacity="0.9" />
+            </linearGradient>
+            <filter id="hub-line-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-        {/* Línea vertical central que atraviesa el nodo S */}
-        <line
-          x1={cx}
-          y1={48}
-          x2={cx}
-          y2={352}
-          stroke="url(#hub-line-grad)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          filter="url(#hub-line-glow)"
-          opacity="0.45"
-        />
+          {/* Línea vertical central que atraviesa el nodo S */}
+          <line
+            x1={cx}
+            y1={48}
+            x2={cx}
+            y2={352}
+            stroke="url(#hub-line-grad)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            filter="url(#hub-line-glow)"
+            opacity="0.45"
+          />
 
-        {HUB_NODES.map((node) => {
-          const tx = (node.x / 100) * 400
-          const ty = (node.y / 100) * 400
-          return (
-            <g key={node.id}>
-              <path
-                d={circuitPath(cx, cy, tx, ty, node.side)}
-                fill="none"
-                stroke="url(#hub-line-grad)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                filter="url(#hub-line-glow)"
-                opacity="0.75"
-              />
-              <circle cx={tx} cy={ty} r="3" fill="#a855f7" opacity="0.9" />
-            </g>
-          )
-        })}
-      </svg>
+          {HUB_NODES.map((node) => {
+            const tx = (node.x / 100) * 400
+            const ty = (node.y / 100) * 400
+            return (
+              <g key={node.id}>
+                <path
+                  d={circuitPath(cx, cy, tx, ty, node.side)}
+                  fill="none"
+                  stroke="url(#hub-line-grad)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  filter="url(#hub-line-glow)"
+                  opacity="0.75"
+                />
+                <circle cx={tx} cy={ty} r="3" fill="#a855f7" opacity="0.9" />
+              </g>
+            )
+          })}
+        </svg>
+
+        {/* Iconos flotantes de aplicaciones */}
+        {HUB_NODES.map((node, i) => (
+          <div
+            key={node.id}
+            className="absolute z-10 group/icon"
+            style={{
+              left: `${node.x}%`,
+              top: `${node.y}%`,
+              transform: 'translate(-50%, -50%)',
+              animation: `hubNodeIn 0.6s ease-out ${0.1 + i * 0.08}s both`,
+            }}
+            title={node.label}
+          >
+            <div
+              className="size-11 sm:size-12 md:size-[52px] rounded-xl bg-[#0d1117]/90 border border-white/10
+                         flex items-center justify-center shadow-lg shadow-black/30
+                         transition-all duration-300 ease-out
+                         group-hover/icon:border-indigo-500/40 group-hover/icon:shadow-indigo-500/20 group-hover/icon:-translate-y-0.5
+                         animate-counter-rotate"
+            >
+              {node.icon}
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* Glow central neón */}
       <div
@@ -213,30 +241,6 @@ export function HeroConnectionHub() {
           </div>
         </div>
       </div>
-
-      {/* Iconos flotantes de aplicaciones */}
-      {HUB_NODES.map((node, i) => (
-        <div
-          key={node.id}
-          className="absolute z-10 group/icon"
-          style={{
-            left: `${node.x}%`,
-            top: `${node.y}%`,
-            transform: 'translate(-50%, -50%)',
-            animation: `hubNodeIn 0.6s ease-out ${0.1 + i * 0.08}s both`,
-          }}
-          title={node.label}
-        >
-          <div
-            className="size-11 sm:size-12 md:size-[52px] rounded-xl bg-[#0d1117]/90 border border-white/10
-                       flex items-center justify-center shadow-lg shadow-black/30
-                       transition-all duration-300 ease-out
-                       group-hover/icon:border-indigo-500/40 group-hover/icon:shadow-indigo-500/20 group-hover/icon:-translate-y-0.5"
-          >
-            {node.icon}
-          </div>
-        </div>
-      ))}
     </div>
   )
 }
