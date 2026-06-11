@@ -215,7 +215,7 @@ export function FeatureShowcase() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           animate={{
-            y: [0, -12, 0],
+            y: [0, -10, 0],
           }}
           transition={{
             y: {
@@ -226,15 +226,22 @@ export function FeatureShowcase() {
           }}
           className="relative mt-16 md:mt-20 flex justify-center"
         >
-          {/* Glow behind dashboard */}
-          <div className="absolute inset-0 bg-purple-500/20 rounded-3xl blur-[60px] md:blur-[80px] -z-10 opacity-60" />
-          
-          <div className="relative bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 backdrop-blur-xl shadow-2xl overflow-hidden w-full max-w-5xl">
-            <div className="relative">
+          <div className="relative w-full max-w-6xl lg:max-w-7xl">
+            {/* Glow effect behind dashboard */}
+            <div 
+              className="absolute inset-0 rounded-2xl -z-10"
+              style={{
+                background: 'radial-gradient(circle, rgba(123,63,228,0.4), transparent)',
+                filter: 'blur(80px)'
+              }}
+            />
+            
+            {/* Premium wrapper */}
+            <div className="relative bg-white/5 backdrop-blur-xl rounded-2xl p-3 md:p-5 shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
               <img 
                 src="/images/dashboard.png" 
                 alt="Dashboard Preview" 
-                className="w-full max-w-full rounded-xl shadow-2xl"
+                className="w-full max-w-full object-contain rounded-xl"
                 loading="lazy"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
               />
