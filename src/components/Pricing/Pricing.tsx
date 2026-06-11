@@ -1,6 +1,8 @@
 import { PRICING_PLANS, PRICING_NOTE } from '@/constants'
 import type { PricingPlan } from '@/types'
 
+const WHATSAPP_NUMBER = '573245246651'
+
 /** Limpia ~, guiones y símbolos raros; deja precios positivos y legibles */
 function formatPlanPrice(value: string): string {
   let cleaned = value.trim().replace(/^[~\-−–—\s]+/, '')
@@ -15,6 +17,9 @@ const planCtaBase =
   'hover:shadow-[0_0_20px_rgba(139,92,246,0.5)]'
 
 function PlanCard({ plan }: { plan: PricingPlan }) {
+  const whatsappMessage = `Hola! Quiero más información con los planes: ${plan.name}.`
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`
+
   return (
     <div className="relative h-full">
       {plan.featured && (
@@ -101,7 +106,10 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
           🚀 Entrega en {plan.deliveryDays} días hábiles
         </div>
 
-        <button
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className={`${planCtaBase} ${
             plan.featured
               ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-transparent hover:from-indigo-500 hover:to-purple-500'
@@ -109,7 +117,7 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
           }`}
         >
           {plan.ctaLabel}
-        </button>
+        </a>
       </div>
     </div>
   )

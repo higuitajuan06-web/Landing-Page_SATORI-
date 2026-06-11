@@ -9,8 +9,10 @@ import {
   BrainCircuit, 
   Headset, 
   TrendingUp,
-  Crown
+  Crown,
+  MessageCircle
 } from 'lucide-react'
+import { Dashboard } from './Dashboard'
 
 const features = [
   {
@@ -210,8 +212,8 @@ export function FeatureShowcase() {
 
         {/* Dashboard Showcase */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           animate={{
             y: [0, -10, 0],
@@ -236,18 +238,52 @@ export function FeatureShowcase() {
               }}
             />
             
-            {/* Premium wrapper */}
-            <div className="relative bg-white/5 backdrop-blur-xl rounded-2xl p-3 md:p-5 shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
-              <img 
-                src="/images/dashboard.png" 
-                alt="Dashboard Preview" 
-                className="w-full max-w-full object-contain rounded-xl"
-                loading="lazy"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
-              />
+            {/* Computer mockup container */}
+            <div className="relative bg-[#05010a] backdrop-blur-xl rounded-2xl border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.9)] overflow-hidden">
+              {/* macOS-style window controls */}
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-white/5">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                </div>
+                <div className="flex-1 text-center">
+                  <span className="text-gray-400 text-xs">SATURN Dashboard</span>
+                </div>
+              </div>
+              
+              {/* Dashboard content */}
+              <div className="h-[600px] md:h-[700px] lg:h-[800px]">
+                <Dashboard />
+              </div>
             </div>
           </div>
         </motion.div>
+
+        {/* WhatsApp Floating Button */}
+        <motion.a
+          href="https://wa.me/1234567890"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          whileHover={{ scale: 1.1 }}
+          animate={{
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            delay: 1,
+            scale: {
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }
+          }}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
+        >
+          <MessageCircle className="w-7 h-7 text-white" />
+        </motion.a>
       </div>
     </section>
   )

@@ -15,7 +15,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'Soluciones', href: '#beneficios' },
   { label: 'Cómo funciona', href: '#proceso' },
   { label: 'Planes', href: '#planes' },
-  { label: 'Contacto', href: '#footer' },
+  { label: 'Contacto', href: '#listo-para-automatizar' },
 ]
 
 // ─── WhatsApp CTA ──────────────────────────────────────────────────────────

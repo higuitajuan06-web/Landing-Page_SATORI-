@@ -1,8 +1,9 @@
 import { DEMO_CALENDAR_URL, WHATSAPP_URL } from '@/constants'
+import { Calendar, MessageCircle } from 'lucide-react'
 
 export function CTA() {
   return (
-    <section className="py-12 sm:py-20 px-4 sm:px-6">
+    <section id="listo-para-automatizar" className="py-12 sm:py-20 px-4 sm:px-6">
       <div
         className="max-w-full sm:max-w-[700px] mx-auto rounded-[20px] px-4 sm:px-10 py-12 sm:py-16 text-center relative overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #3B0764, #5B21B6, #7C3AED)' }}
@@ -26,17 +27,19 @@ export function CTA() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3 flex-wrap">
             <a 
               href={DEMO_CALENDAR_URL} 
-              className="btn-solid-white w-full sm:w-auto min-h-[44px] flex items-center justify-center text-sm sm:text-base"
+              className="btn-solid-white w-full sm:w-auto min-h-[44px] flex items-center justify-center gap-2 text-sm sm:text-base"
             >
-              📅 Agendar demo gratis
+              <Calendar className="w-4 h-4" />
+              Agendar demo gratis
             </a>
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-ghost-white w-full sm:w-auto min-h-[44px] flex items-center justify-center text-sm sm:text-base"
+              className="btn-ghost-white w-full sm:w-auto min-h-[44px] flex items-center justify-center gap-2 text-sm sm:text-base"
             >
-              💬 Escribirnos ahora
+              <MessageCircle className="w-4 h-4" />
+              Escribirnos ahora
             </a>
           </div>
         </div>
