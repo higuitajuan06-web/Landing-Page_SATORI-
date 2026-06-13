@@ -16,7 +16,6 @@ import {
   Zap,
   MessageCircle,
   Globe,
-  Activity,
   ArrowUpRight,
   ArrowDownRight,
   DollarSign,
